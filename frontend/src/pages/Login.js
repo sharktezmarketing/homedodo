@@ -35,7 +35,13 @@ function Login() {
 
       alert("Login successful");
 
-      navigate("/");
+      if (res.data.user.role === "admin") {
+  navigate("/admin");
+} else if (res.data.user.role === "vendor") {
+  navigate("/vendor");
+} else {
+  navigate("/customer");
+}
     } catch (error) {
       console.log(error);
       alert("Login failed");
