@@ -11,7 +11,15 @@ connection.connect((err) => {
   if (err) {
     console.log("Database Error:", err);
   } else {
-    console.log("MySQL Connected");
+    console.log("MySQL Connected Successfully");
+  }
+});
+
+connection.query("SELECT DATABASE()", (err, result) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Current Database:", result);
   }
 });
 

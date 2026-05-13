@@ -13,6 +13,8 @@ import CustomerDashboard from "./pages/CustomerDashboard";
 import VendorDashboard from "./pages/VendorDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
+import BookingPage from "./pages/BookingPage";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -49,6 +51,15 @@ function App() {
           element={
             <ProtectedRoute role="admin">
               <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/booking"
+          element={
+            <ProtectedRoute role="customer">
+              <BookingPage />
             </ProtectedRoute>
           }
         />

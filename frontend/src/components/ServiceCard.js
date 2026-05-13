@@ -1,6 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function ServiceCard({ title, image }) {
+  const navigate = useNavigate();
+
+  const handleBooking = () => {
+    navigate("/booking", {
+      state: {
+        service: title,
+      },
+    });
+  };
+
   return (
     <div
       style={{
@@ -23,6 +34,21 @@ function ServiceCard({ title, image }) {
 
       <div style={{ padding: "10px" }}>
         <h4>{title}</h4>
+
+        <button
+          onClick={handleBooking}
+          style={{
+            marginTop: "10px",
+            padding: "8px 12px",
+            border: "none",
+            borderRadius: "8px",
+            background: "#000",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+        >
+          Book Now
+        </button>
       </div>
     </div>
   );
