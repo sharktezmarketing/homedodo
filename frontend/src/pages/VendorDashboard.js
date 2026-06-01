@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import Sidebar from "../components/Sidebar";
+
 function VendorDashboard() {
   const [bookings, setBookings] = useState([]);
 
@@ -34,43 +36,66 @@ function VendorDashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Vendor Dashboard</h1>
+    <div className="dashboard-container">
 
-      {bookings.map((booking) => (
-        <div
-          key={booking.id}
-          style={{
-            background: "#fff",
-            padding: "15px",
-            marginBottom: "15px",
-            borderRadius: "10px",
-          }}
-        >
-          <h3>{booking.service_name}</h3>
+      <Sidebar title="Vendor Panel" />
 
-          <p>{booking.address}</p>
+      <div className="main-content">
 
-          <p>Status: {booking.status}</p>
+        <h1>Vendor Dashboard</h1>
 
-          <button
-            onClick={() =>
-              updateStatus(booking.id, "accepted")
-            }
+        <br />
+
+        {bookings.map((booking) => (
+
+          <div
+            key={booking.id}
+            className="dashboard-card"
           >
-            Accept
-          </button>
+            <h3>{booking.service_name}</h3>
 
-          <button
-            onClick={() =>
-              updateStatus(booking.id, "completed")
-            }
-            style={{ marginLeft: "10px" }}
-          >
-            Complete
-          </button>
-        </div>
-      ))}
+            <br />
+
+            <p>{booking.address}</p>
+
+            <br />
+
+            <span
+              className={`status ${booking.status}`}
+            >
+              {booking.status}
+            </span>
+
+            <br />
+
+            <button
+              className="action-btn"
+              onClick={() =>
+                updateStatus(
+                  booking.id,
+                  "accepted"
+                )
+              }
+            >
+              Accept
+            </button>
+
+            <button
+              className="action-btn"
+              onClick={() =>
+                updateStatus(
+                  booking.id,
+                  "completed"
+                )
+              }
+            >
+              Complete
+            </button>
+
+          </div>
+        ))}
+
+      </div>
     </div>
   );
 }

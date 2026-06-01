@@ -1,34 +1,53 @@
-import React, { useState } from "react";
+import React,
+{
+  useState,
+} from "react";
+
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+
+import {
+  useLocation,
+} from "react-router-dom";
+
+import {
+  useNavigate,
+} from "react-router-dom";
 
 function BookingPage() {
+
   const location = useLocation();
 
-  const serviceName =
-    location.state?.service || "";
+  const service =
+    location.state?.service;
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
 
-  const today = new Date().toISOString().split("T")[0];
-
-  const [formData, setFormData] = useState({
-    service_name: serviceName,
-    booking_date: "",
-    address: "",
-  });
+  const [formData, setFormData] =
+    useState({
+      service_name:
+        service?.service_name || "",
+      booking_date: "",
+      address: "",
+    });
 
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
+
   };
 
   const handleBooking = async (e) => {
+
     e.preventDefault();
 
     try {
+
       const res = await axios.post(
         "http://localhost:5000/api/bookings/create",
         {
@@ -37,39 +56,42 @@ function BookingPage() {
         }
       );
 
-      alert(res.data.message);
-
-      setFormData({
-        service_name: serviceName,
-        booking_date: "",
-        address: "",
-      });
-
+      alert("Booking Successful");
+      
     } catch (error) {
-      console.log(error.response?.data || error);
+
+      console.log(error);
 
       alert("Booking failed");
+
     }
   };
+
+  const navigate =
+useNavigate();
 
   return (
     <div
       style={{
         padding: "20px",
-        minHeight: "100vh",
         background: "#f5f5f5",
+        minHeight: "100vh",
       }}
     >
+
       <div
         style={{
-          maxWidth: "400px",
+          maxWidth: "500px",
           margin: "auto",
           background: "#fff",
-          padding: "20px",
+          padding: "25px",
           borderRadius: "15px",
         }}
       >
+
         <h2>Book Service</h2>
+
+        <br />
 
         <form onSubmit={handleBooking}>
 
@@ -81,52 +103,71 @@ function BookingPage() {
             style={{
               width: "100%",
               padding: "12px",
-              marginBottom: "15px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              color: "#000",
             }}
           />
+
+          <br />
+          <br />
 
           <input
             type="date"
             name="booking_date"
-            min={today}
             value={formData.booking_date}
             onChange={handleChange}
+            required
             style={{
               width: "100%",
               padding: "12px",
-              marginBottom: "15px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              color: "#000",
             }}
           />
+
+          <br />
+          <br />
 
           <textarea
             name="address"
             placeholder="Enter Address"
             value={formData.address}
             onChange={handleChange}
+            required
             rows="4"
             style={{
               width: "100%",
               padding: "12px",
-              marginBottom: "15px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              color: "#000",
             }}
           />
+
+          <br />
+          <br />
 
           <button
             type="submit"
             style={{
               width: "100%",
-              padding: "12px",
+              padding: "14px",
+              border: "none",
+              borderRadius: "10px",
               background: "#000",
               color: "#fff",
-              border: "none",
-              borderRadius: "8px",
+              fontSize: "16px",
             }}
           >
             Confirm Booking
           </button>
 
         </form>
+
       </div>
+
     </div>
   );
 }

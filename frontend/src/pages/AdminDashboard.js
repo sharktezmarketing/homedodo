@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import Sidebar from "../components/Sidebar";
+
 function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
 
@@ -21,30 +23,44 @@ function AdminDashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Admin Dashboard</h1>
+    <div className="dashboard-container">
 
-      <h2>All Bookings</h2>
+      <Sidebar title="Admin Panel" />
 
-      {bookings.map((booking) => (
-        <div
-          key={booking.id}
-          style={{
-            background: "#fff",
-            padding: "15px",
-            marginBottom: "15px",
-            borderRadius: "10px",
-          }}
-        >
-          <h3>{booking.service_name}</h3>
+      <div className="main-content">
 
-          <p>{booking.address}</p>
+        <h1>Admin Dashboard</h1>
 
-          <p>Status: {booking.status}</p>
+        <br />
 
-          <p>User ID: {booking.user_id}</p>
-        </div>
-      ))}
+        {bookings.map((booking) => (
+
+          <div
+            key={booking.id}
+            className="dashboard-card"
+          >
+            <h3>{booking.service_name}</h3>
+
+            <br />
+
+            <p>{booking.address}</p>
+
+            <br />
+
+            <p>User ID: {booking.user_id}</p>
+
+            <br />
+
+            <span
+              className={`status ${booking.status}`}
+            >
+              {booking.status}
+            </span>
+
+          </div>
+        ))}
+
+      </div>
     </div>
   );
 }
